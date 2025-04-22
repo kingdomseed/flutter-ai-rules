@@ -1,5 +1,9 @@
 # Flutter Rules for Windsurf, Cursor, and Other AI-Powered IDEs
 
+## ⚡ TLDR
+
+Copy the contents of the rule set of your choice (e.g., [combined/flutter_dart__under_6K.md](combined/flutter_dart__under_6K.md)) into your IDE's global or local rules.
+
 ## 🚀 Introduction
 
 This repository provides a comprehensive, (almost) non-opinionated collection of Flutter-related rules tailored for use with **Windsurf**, **Cursor**, and other AI-powered IDEs. These rules are designed to improve your development workflow, ensure consistency, and help you get the most out of your AI coding assistant.
