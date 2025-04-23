@@ -1,5 +1,7 @@
 # Flutter Rules for Windsurf, Cursor, and Other AI-Powered IDEs
 
+<img src="media/flutter_ai_rules.png" width="500" alt="Flutter Rules for Windsurf, Cursor">
+
 ## ⚡ TLDR
 
 Copy the contents of the rule set of your choice (e.g., [combined/flutter_dart__under_6K.md](combined/flutter_dart__under_6K.md)) into your IDE's global or local rules.
@@ -45,6 +47,11 @@ If you prefer more control:
     - **Reference** them in prompts to add context.
     - **Extract** only the parts that are useful for your context.
     - **Include** them partially or fully in a PRD (Product Requirements Document).
+
+<div align="center">
+  <img src="media/mocktail_md_01.png" width="300" alt="Example usage with Mocktail rules">
+  <img src="media/mocktail_md_02.png" width="300" alt="Example usage with Mocktail rules">
+</div>
 
 Everything is modular — use what works best for you.
 
