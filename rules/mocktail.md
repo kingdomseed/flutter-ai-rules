@@ -13,5 +13,12 @@
 11. Prefer using real objects over mocks when possible; if not, use a tested fake implementation (`extends Fake`) over a mock.
 12. Never add implementation or `@override` methods to a class extending `Mock`.
 13. Only use mocks if your test asserts on interactions (calls to `verify`); otherwise, prefer real or fake objects.
+14. Always stub async methods (returning `Future` or `Future<void>`) with `thenAnswer((_) async {})` or `thenReturn(Future.value(...))`.
+15. Always include all named parameters in both `when` and `verify` calls, even if you only care about one. Use `any(named: 'paramName')` for those you don't care about.
+16. If a method has default values for named parameters, Mocktail still expects all of them to be matched in both stubs and verifies.
+17. Use `any()` for positional parameters in `when`/`verify` if you don't care about the exact instance.
+18. Register fallback values for any custom types that are used with argument matchers before using them in your tests.
+19. Stub every method you expect to be called, even if it's not the focus of your test, to prevent runtime errors.
+20. When matching string outputs, make sure you understand what `.toString()` returns for the type you are using.
 
-TOTAL CHAR COUNT:     1681
+TOTAL CHAR COUNT:     2577

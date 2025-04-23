@@ -28,4 +28,4 @@
 26. Data models should not be mocked if they can be constructed with stubbed data.
 27. Only use mocks if your test asserts on interactions (calls to `verify`); otherwise, prefer real or fake objects.
 
-TOTAL CHAR COUNT:     3079
+TOTAL CHAR COUNT:     3080

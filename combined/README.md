@@ -6,7 +6,7 @@ This document contains character counts for all combined rule files.
 |------|----------------|
 | flutter_dart__under_6K.md |     5858 |
 | flutter_dart_bloc_mocktail__under_6K.md |     4751 |
-| flutter_dart_bloc_mocktail.md |    23897 |
+| flutter_dart_bloc_mocktail.md |    24801 |
 | flutter_dart_change_notifier__under_6K.md |     5553 |
 | flutter_dart_change_notifier.md |    17155 |
 | flutter_dart_provider__under_6K.md |     5681 |
