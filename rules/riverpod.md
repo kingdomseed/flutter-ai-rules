@@ -1,5 +1,45 @@
 # Riverpod Rules
 
+### Using Ref in Riverpod
+1. The `Ref` object is essential for accessing the provider system, reading or watching other providers, managing lifecycles, and handling dependencies in Riverpod.
+2. In functional providers, obtain `Ref` as a parameter; in class-based providers, access it as a property of the Notifier.
+3. In widgets, use `WidgetRef` (a subtype of `Ref`) to interact with providers.
+4. The `@riverpod` annotation is used to define providers with code generation, where the function receives `ref` as its parameter.
+5. Use `ref.watch` to reactively listen to other providers; use `ref.read` for one-time access (non-reactive); use `ref.listen` for imperative subscriptions; use `ref.onDispose` to clean up resources.
+6. Example: Functional provider with Ref
+   ```dart
+   final otherProvider = Provider<int>((ref) => 0);
+   final provider = Provider<int>((ref) {
+     final value = ref.watch(otherProvider);
+     return value * 2;
+   });
+   ```
+7. Example: Provider with @riverpod annotation
+   ```dart
+   @riverpod
+   int example(ref) {
+     return 0;
+   }
+   ```
+8. Example: Using Ref for cleanup
+   ```dart
+   final provider = StreamProvider<int>((ref) {
+     final controller = StreamController<int>();
+     ref.onDispose(controller.close);
+     return controller.stream;
+   });
+   ```
+9. Example: Using WidgetRef in a widget
+   ```dart
+   class MyWidget extends ConsumerWidget {
+     @override
+     Widget build(BuildContext context, WidgetRef ref) {
+       final value = ref.watch(myProvider);
+       return Text('$value');
+     }
+   }
+   ```
+
 ### Combining Requests
 1. Use the `Ref` object to combine providers and requests; all providers have access to a `Ref`.
 2. In functional providers, obtain `Ref` as a parameter; in class-based providers, access it as a property of the Notifier.

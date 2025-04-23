@@ -16,8 +16,8 @@ This document contains character counts for all combined rule files.
 | flutter_dart.md |    14400 |
 | flutter_with_bloc__under_6K.md |     5145 |
 | flutter_with_bloc.md |    22250 |
-| flutter_with_riverpod__under_6K.md |     5307 |
-| flutter_with_riverpod.md |    28818 |
+| flutter_with_riverpod__under_6K.md |     5779 |
+| flutter_with_riverpod.md |    30379 |
 
 ---
 

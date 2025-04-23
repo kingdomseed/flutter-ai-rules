@@ -25,6 +25,26 @@
 10. Always install and use `riverpod_lint` to enable IDE refactoring and enforce best practices.
 11. Providers are lazy—network requests or logic inside a provider are only executed when the provider is first read.
 12. Multiple widgets can listen to the same provider; the provider will only execute once and cache the result.
+13. Obtain the `Ref` object as a parameter in provider functions (or `WidgetRef` in widgets) to access other providers and manage lifecycles.
+
+**Example: Using @riverpod annotation**
+```dart
+@riverpod
+int example(ref) {
+  return 0;
+}
+```
+
+**Example: Using WidgetRef in a widget**
+```dart
+class MyWidget extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final value = ref.watch(myProvider);
+    return Text('$value');
+  }
+}
+```
 
 ## Ref Object Usage
 1. Use `ref.watch` to reactively depend on other providers; the provider will rebuild when dependencies change.
