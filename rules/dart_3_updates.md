@@ -1,6 +1,7 @@
 # Dart 3 Updates
 
 ### Branches
+
 1. Use `if` statements for conditional branching. The condition must evaluate to a boolean.
 2. `if` statements support optional `else` and `else if` clauses for multiple branches.
 3. Use `if-case` statements to match and destructure a value against a single pattern. Example: `if (pair case [int x, int y]) { ... }`
@@ -23,6 +24,7 @@
 20. If a guard clause evaluates to false, execution proceeds to the next case (does not exit the switch).
 
 ### Patterns
+
 1. Patterns are a syntactic category that represent the shape of values for matching and destructuring.
 2. Pattern matching checks if a value has a certain shape, constant, equality, or type.
 3. Pattern destructuring allows extracting parts of a matched value and binding them to variables.
@@ -49,6 +51,7 @@
 20. Patterns provide a concise alternative to verbose type-checking and destructuring code.
 
 ### Pattern Types
+
 1. Pattern precedence determines evaluation order; use parentheses to group lower-precedence patterns.
 2. Logical-or patterns (`pattern1 || pattern2`) match if any branch matches, evaluated left-to-right. All branches must bind the same set of variables.
 3. Logical-and patterns (`pattern1 && pattern2`) match if both subpatterns match. Bound variable names must not overlap between subpatterns.
@@ -69,6 +72,7 @@
 18. All pattern types can be nested and combined for expressive and precise matching and destructuring.
 
 ### Records
+
 1. Records are anonymous, immutable, aggregate types that bundle multiple objects into a single value.
 2. Records are fixed-sized, heterogeneous, and strongly typed. Each field can have a different type.
 3. Records are real values: store them in variables, nest them, pass to/from functions, and use in lists, maps, and sets.

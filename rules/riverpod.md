@@ -1,12 +1,14 @@
 # Riverpod Rules
 
 ### Using Ref in Riverpod
+
 1. The `Ref` object is essential for accessing the provider system, reading or watching other providers, managing lifecycles, and handling dependencies in Riverpod.
 2. In functional providers, obtain `Ref` as a parameter; in class-based providers, access it as a property of the Notifier.
 3. In widgets, use `WidgetRef` (a subtype of `Ref`) to interact with providers.
 4. The `@riverpod` annotation is used to define providers with code generation, where the function receives `ref` as its parameter.
 5. Use `ref.watch` to reactively listen to other providers; use `ref.read` for one-time access (non-reactive); use `ref.listen` for imperative subscriptions; use `ref.onDispose` to clean up resources.
 6. Example: Functional provider with Ref
+
    ```dart
    final otherProvider = Provider<int>((ref) => 0);
    final provider = Provider<int>((ref) {
@@ -14,14 +16,18 @@
      return value * 2;
    });
    ```
+
 7. Example: Provider with @riverpod annotation
+
    ```dart
    @riverpod
    int example(ref) {
      return 0;
    }
    ```
+
 8. Example: Using Ref for cleanup
+
    ```dart
    final provider = StreamProvider<int>((ref) {
      final controller = StreamController<int>();
@@ -29,7 +35,9 @@
      return controller.stream;
    });
    ```
+
 9. Example: Using WidgetRef in a widget
+
    ```dart
    class MyWidget extends ConsumerWidget {
      @override
@@ -41,6 +49,7 @@
    ```
 
 ### Combining Requests
+
 1. Use the `Ref` object to combine providers and requests; all providers have access to a `Ref`.
 2. In functional providers, obtain `Ref` as a parameter; in class-based providers, access it as a property of the Notifier.
 3. Prefer using `ref.watch` to combine requests, as it enables reactive and declarative logic that automatically recomputes when dependencies change.
@@ -53,6 +62,7 @@
 10. Be cautious with `ref.read`, as providers not being listened to may destroy their state if not actively watched.
 
 ### Auto Dispose & State Disposal
+
 1. By default, with code generation, provider state is destroyed when the provider stops being listened to for a full frame.
 2. Opt out of automatic disposal by setting `keepAlive: true` (codegen) or using `ref.keepAlive()` (manual).
 3. When not using code generation, state is not destroyed by default; enable `.autoDispose` on providers to activate automatic disposal.
@@ -69,6 +79,7 @@
 14. Consider using `ref.onCancel` and `ref.onResume` to implement custom disposal strategies, such as delayed disposal after a provider is no longer listened to.
 
 ### Eager Initialization
+
 1. Providers are initialized lazily by default; they are only created when first used.
 2. There is no built-in way to mark a provider for eager initialization due to Dart's tree shaking.
 3. To eagerly initialize a provider, explicitly read or watch it at the root of your application (e.g., in a `Consumer` placed directly under `ProviderScope`).
@@ -79,6 +90,7 @@
 8. Avoid creating multiple providers or using overrides solely to hide loading/error states; this adds unnecessary complexity and is discouraged.
 
 ### First Provider & Network Requests
+
 1. Always wrap your app with `ProviderScope` at the root (directly in `runApp`) to enable Riverpod for the entire application.
 2. Place business logic such as network requests inside providers; use `Provider`, `FutureProvider`, or `StreamProvider` depending on the return type.
 3. Providers are lazy—network requests or logic inside a provider are only executed when the provider is first read.
@@ -95,6 +107,7 @@
 14. Do not re-execute network requests on widget rebuilds; Riverpod ensures the provider is only executed once unless explicitly invalidated.
 
 ### Passing Arguments to Providers
+
 1. Use provider "families" to pass arguments to providers; add `.family` after the provider type and specify the argument type.
 2. When using code generation, add parameters directly to the annotated function (excluding `ref`).
 3. Always enable `autoDispose` for providers that receive parameters to avoid memory leaks.
@@ -107,6 +120,7 @@
 10. If two widgets consume the same provider with the same parameters, only one computation/network request is made; with different parameters, each is cached separately.
 
 ### FAQ & Best Practices
+
 1. Use `ref.refresh(provider)` when you want to both invalidate a provider and immediately read its new value; use `ref.invalidate(provider)` if you only want to invalidate without reading the value.
 2. Always use the return value of `ref.refresh`; ignoring it will trigger a lint warning.
 3. If a provider is invalidated while not being listened to, it will not update until it is listened to again.
@@ -120,6 +134,7 @@
 11. If you encounter "Cannot use `ref` after the widget was disposed", ensure you check `context.mounted` before using `ref` after an `await` in an async callback.
 
 ### Provider Observers (Logging & Error Reporting)
+
 1. Use a `ProviderObserver` to listen to all events in the provider tree for logging, analytics, or error reporting.
 2. Extend the `ProviderObserver` class and override its methods to respond to provider lifecycle events:
    - `didAddProvider`: called when a provider is added to the tree.
@@ -131,6 +146,7 @@
 5. Use observers to integrate with remote error reporting services, log provider state changes, or trigger custom analytics.
 
 ### Performing Side Effects
+
 1. Use Notifiers (`Notifier`, `AsyncNotifier`, etc.) to expose methods for performing side effects (e.g., POST, PUT, DELETE) and modifying provider state.
 2. Always define provider variables as `final` and at the top level (global scope).
 3. Choose the provider type (`NotifierProvider`, `AsyncNotifierProvider`, etc.) based on the return type of your logic.
@@ -152,27 +168,36 @@
 13. Do not perform side effects directly inside provider constructors or build methods; expose them via Notifier methods and invoke from the UI layer.
 
 ### Testing Providers
+
 1. Always create a new `ProviderContainer` (unit tests) or `ProviderScope` (widget tests) for each test to avoid shared state between tests. Use a utility like `createContainer()` to set up and automatically dispose containers (see `/references/riverpod/testing/create_container.dart`).
 2. In unit tests, never share `ProviderContainer` instances between tests. Example:
+
    ```dart
    final container = createContainer();
    expect(container.read(provider), equals('some value'));
    ```
+
 3. In widget tests, always wrap your widget tree with `ProviderScope` when using `tester.pumpWidget`. Example:
+
    ```dart
    await tester.pumpWidget(
      const ProviderScope(child: YourWidgetYouWantToTest()),
    );
    ```
+
 4. Obtain a `ProviderContainer` in widget tests using `ProviderScope.containerOf(BuildContext)`. Example:
+
    ```dart
    final element = tester.element(find.byType(YourWidgetYouWantToTest));
    final container = ProviderScope.containerOf(element);
    ```
+
 5. After obtaining the container, you can read or interact with providers as needed for assertions. Example:
+
    ```dart
    expect(container.read(provider), 'some value');
    ```
+
 6. For providers with `autoDispose`, prefer `container.listen` over `container.read` to prevent the provider's state from being disposed during the test.
 7. Use `container.read` to read provider values and `container.listen` to listen to provider changes in tests.
 8. Use the `overrides` parameter on `ProviderScope` or `ProviderContainer` to inject mocks or fakes for providers in your tests.
